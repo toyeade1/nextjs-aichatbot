@@ -7,3 +7,11 @@ export const createnoteSchema = z.object({
 })
 
 export type CreateNoteSchema = z.infer<typeof createnoteSchema>
+
+export const UpdateNoteSchema = createnoteSchema.extend({
+    id: z.string().min(1),
+})
+
+export const DeleteNoteSchema = z.object({
+    id: z.string().min(1),
+})

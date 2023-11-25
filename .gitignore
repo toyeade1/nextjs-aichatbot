@@ -37,3 +37,7 @@ next-env.d.ts
 
 #database 
 /prisma
+/db
+
+#local
+.env

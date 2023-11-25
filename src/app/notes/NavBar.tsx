@@ -7,11 +7,18 @@ import { UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import AddNoteDialog from "@/components/AddNoteDialog";
+import AddEditNoteDialog from "@/components/AddEditNoteDialog";
+import ThemeToggleButton from "@/components/ThemeToggleButton";
+// import clerks dark theme library 
+import {dark} from "@clerk/themes"
+import { useTheme } from "next-themes";
+import AIChatButton from "@/components/AIChatButton";
 
 export default function NavBar() {
 
-    const [showAddDialog, setShowAddDialog] = useState(false);
+    const {theme} = useTheme()
+
+    const [showAddEditDialog, setShowAddEditDialog] = useState(false);
   return (
     <>
     <div className="p-4 shadow">
@@ -24,6 +31,8 @@ export default function NavBar() {
           <UserButton
             afterSignOutUrl="/"
             appearance={{
+              //adding the basetheme to toggle between light and dark using the global themeprovider component
+              baseTheme: (theme === "dark" ? dark : undefined),
               elements: {
                 avatarBox: {
                   width: "2.5rem",
@@ -32,16 +41,17 @@ export default function NavBar() {
               },
             }}
           />
-          {/*  */}
-          <Button onClick={() => setShowAddDialog(true)}>
+          <ThemeToggleButton />
+          <Button onClick={() => setShowAddEditDialog(true)}>
             {/* The plus element is a custom icon from react and it gives the plus sign */}
             <Plus size={20} className="mr-2" />
             Add Note</Button>
+          <AIChatButton />
         </div>
       </div>
     </div>
     {/* Here we are toggling the showdialog with the usestate function. it is default set to false. */}
-    <AddNoteDialog open={showAddDialog} setOpen={setShowAddDialog} />
+    <AddEditNoteDialog open={showAddEditDialog} setOpen={setShowAddEditDialog} />
     </>
   );
 }
